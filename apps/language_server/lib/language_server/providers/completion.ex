@@ -485,7 +485,8 @@ defmodule ElixirLS.LanguageServer.Providers.Completion do
         spec && spec != "" ->
           spec
 
-        String.starts_with?(type, ["private", "public"]) ->
+        is_binary(type)
+        && String.starts_with?(type, ["private", "public"]) ->
           String.replace(type, "_", " ")
 
         true ->

@@ -1,6 +1,8 @@
 defmodule ElixirLS.LanguageServer.SourceFile do
   import ElixirLS.LanguageServer.Protocol
 
+  alias ElixirSense.Core.Normalized.Code, as: NormalizedCode
+
   defstruct [:text, :version, dirty?: false]
 
   def lines(%__MODULE__{text: text}) do
@@ -114,7 +116,7 @@ defmodule ElixirLS.LanguageServer.SourceFile do
   end
 
   def function_line(mod, fun, arity) do
-    case ElixirSense.Core.Introspection.get_docs(mod, :docs) do
+    case NormalizedCode.get_docs(mod, :docs) do
       nil ->
         nil
 
